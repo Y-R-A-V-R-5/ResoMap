@@ -1,0 +1,110 @@
+# ============================================================
+# ResoMap – Global Experiment Configuration
+# ============================================================
+# This config defines a controlled study on how spatial
+# input resolution affects accuracy, latency, and memory
+# usage under fixed CPU constraints.
+# ============================================================
+
+project_name: "ResoMap"
+
+# High-level description of the experiment goal
+description: >
+  Resolution Sensitivity Under CPU Constraints.
+  Measures accuracy, latency, and activation memory
+  as a function of input resolution on CPU-only inference.
+
+# ============================================================
+# Experiment Sweep Definition
+# ============================================================
+# Independent variables for the study.
+# These define the experiment grid.
+sweep:
+  # Spatial input resolutions to evaluate
+  resolutions: [64, 128, 224, 256, 320]
+
+  # Backbone architectures under test
+  models: ["VGG11", "VGG13"]
+
+# ============================================================
+# System & Profiling Configuration
+# ============================================================
+# Settings here are intentionally locked to reduce variance
+# and ensure reproducible latency measurements.
+system:
+  device: "cpu"
+
+  # Fixed thread count to avoid scheduler-induced variance
+  num_threads: 4
+
+  # Forward passes ignored before measurement
+  # (cache warming + CPU frequency stabilization)
+  warmup_runs: 5
+
+  # Number of timed runs used for mean / variance estimation
+  num_profiling_runs: 25
+
+  # Track intermediate activation memory (not just parameters)
+  track_activation_memory: true
+
+  # Disabled since this is CPU-only
+  pin_memory: false
+
+# ============================================================
+# Dataset Configuration
+# ============================================================
+# Data acts as a carrier signal, not an experimental axis.
+data:
+  # Local dataset root
+  raw_path: "data/"
+
+  # DataLoader worker processes
+  num_workers: 2
+
+  # Kaggle dataset used for skin cancer classification
+  kaggle_id: "vinline/unified-dataset-for-skin-cancer-classification"
+
+  # Keep Kaggle cache for reproducibility/debugging
+  cleanup_kaggle_cache: false
+
+# ============================================================
+# Training Configuration
+# ============================================================
+# Conservative by design to reflect CPU deployment constraints
+training:
+  # Small batch size to reflect realistic CPU inference/training
+  batch_size: 32
+
+  # Long enough to observe convergence or collapse
+  epochs: 25
+
+  # Initial epochs ignored for early stopping decisions
+  warmup_epochs: 3
+
+  optimizer: "adam"
+  criterion: "cross_entropy"
+  learning_rate: 0.001
+
+  # Early stopping prevents overtraining and wasted compute
+  early_stopping:
+    enabled: true
+    patience: 5
+    monitor: "val_loss"
+    min_delta: 0.001
+
+# ============================================================
+# Data Augmentation
+# ============================================================
+# Minimal augmentation to avoid hallucinating fine detail
+# at low resolutions.
+augmentation:
+  horizontal_flip: true
+  rotation: 10
+
+# ============================================================
+# Experiment Tracking (MLflow)
+# ============================================================
+# All runs logged for later analysis and comparison
+mlflow:
+  tracking_uri: "https://dagshub.com/Y-R-A-V-R-5/ResoMap.mlflow"
+  experiment_name: "ResoMap"

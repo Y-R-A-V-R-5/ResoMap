@@ -1,0 +1,66 @@
+# ============================================================
+# VGG-11 Architecture Definition
+# ============================================================
+# Canonical VGG-11 style network adapted for:
+# - Variable input resolutions
+# - CPU-only execution
+# - Explicit stage-wise profiling
+#
+# Each stage consists of:
+#   - One or more Conv2D layers
+#   - ReLU activations (implicit in implementation)
+#   - A max-pooling operation
+# ============================================================
+
+model_name: "VGG11"
+
+# Used by the model factory to select implementation logic
+type: "vgg"
+
+# ------------------------------------------------------------
+# Feature Extraction Stages
+# ------------------------------------------------------------
+# Layer format: [in_channels, out_channels, kernel, stride, padding]
+# Pool format:  [kernel_size, stride]
+stages:
+  - stage: "stage1"
+    layers:
+      - [3, 64, 3, 1, 1]
+    pool: [2, 2]
+
+  - stage: "stage2"
+    layers:
+      - [64, 128, 3, 1, 1]
+    pool: [2, 2]
+
+  - stage: "stage3"
+    layers:
+      - [128, 256, 3, 1, 1]
+      - [256, 256, 3, 1, 1]
+    pool: [2, 2]
+
+  - stage: "stage4"
+    layers:
+      - [256, 512, 3, 1, 1]
+      - [512, 512, 3, 1, 1]
+    pool: [2, 2]
+
+  - stage: "stage5"
+    layers:
+      - [512, 512, 3, 1, 1]
+      - [512, 512, 3, 1, 1]
+    pool: [2, 2]
+
+# ------------------------------------------------------------
+# Classifier Head
+# ------------------------------------------------------------
+classifier:
+  # Fully connected layers following global pooling
+  fc_layers: [4096, 4096]
+
+  # Dropout to reduce overfitting
+  dropout: 0.5
+
+  # Adaptive pooling ensures compatibility with
+  # variable input resolutions
+  pooling: "adaptive_avg"

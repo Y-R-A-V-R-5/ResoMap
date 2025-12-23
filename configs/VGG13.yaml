@@ -1,0 +1,60 @@
+# ============================================================
+# VGG-13 Architecture Definition
+# ============================================================
+# VGG-13 increases depth relative to VGG-11 by adding
+# additional convolutional layers in early stages.
+#
+# This allows analysis of:
+# - Depth vs resolution trade-offs
+# - Increased compute under identical CPU constraints
+# - Accuracy saturation behavior at higher resolutions
+# ============================================================
+
+model_name: "VGG13"
+type: "vgg"
+
+# ------------------------------------------------------------
+# Feature Extraction Stages
+# ------------------------------------------------------------
+# Compared to VGG-11, stages 1 and 2 contain two conv layers
+# instead of one, increasing representational capacity.
+stages:
+  - stage: "stage1"
+    # Two conv layers at low-level feature extraction
+    layers:
+      - [3, 64, 3, 1, 1]
+      - [64, 64, 3, 1, 1]
+    pool: [2, 2]
+
+  - stage: "stage2"
+    # Increased depth at early spatial scales
+    layers:
+      - [64, 128, 3, 1, 1]
+      - [128, 128, 3, 1, 1]
+    pool: [2, 2]
+
+  - stage: "stage3"
+    layers:
+      - [128, 256, 3, 1, 1]
+      - [256, 256, 3, 1, 1]
+    pool: [2, 2]
+
+  - stage: "stage4"
+    layers:
+      - [256, 512, 3, 1, 1]
+      - [512, 512, 3, 1, 1]
+    pool: [2, 2]
+
+  - stage: "stage5"
+    layers:
+      - [512, 512, 3, 1, 1]
+      - [512, 512, 3, 1, 1]
+    pool: [2, 2]
+
+# ------------------------------------------------------------
+# Classifier Head
+# ------------------------------------------------------------
+classifier:
+  fc_layers: [4096, 4096]
+  dropout: 0.5
+  pooling: "adaptive_avg"

@@ -1,0 +1,19 @@
+# ============================================================
+# Model Registry
+# ============================================================
+# Maps short model identifiers (used in sweeps and CLI args)
+# to their corresponding architecture definition files.
+#
+# This indirection allows:
+# - Clean experiment sweeps (e.g., "VGG11", "VGG13")
+# - Easy extension to new architectures
+# - Separation of experiment logic from model structure
+# ============================================================
+
+vgg11:
+  # Architecture definition for VGG-11
+  file: VGG11.yaml
+
+vgg13:
+  # Architecture definition for VGG-13
+  file: VGG13.yaml
