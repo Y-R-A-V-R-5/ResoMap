@@ -1,0 +1,41 @@
+# ============================================================
+# ResoMap – System Configuration
+# ============================================================
+# GPU-optimized settings for high-performance training
+
+# Device: 'cuda' for GPU, 'cpu' for CPU, or specific GPU like 'cuda:0'
+device: "cuda"
+
+# Fallback to CPU if CUDA not available
+use_cpu_fallback: true
+
+# Multi-GPU training (DataParallel or DistributedDataParallel)
+multi_gpu: false
+gpu_ids: [0]  # List of GPU IDs to use
+
+# Mixed precision training (AMP) for faster training and lower memory
+use_mixed_precision: true
+
+# Gradient accumulation steps (effective_batch_size = batch_size * accumulation_steps)
+gradient_accumulation_steps: 1
+
+# Fixed thread count for CPU operations
+num_threads: 4
+
+# Forward passes ignored before measurement
+warmup_runs: 5
+
+# Number of timed runs used for mean / variance estimation
+num_profiling_runs: 25
+
+# Track intermediate activation memory
+track_activation_memory: true
+
+# Track GPU memory usage
+track_gpu_memory: true
+
+# Pin memory for faster GPU transfer
+pin_memory: true
+
+# Enable cuDNN benchmark for optimal convolution algorithms
+cudnn_benchmark: true

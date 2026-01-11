@@ -1,0 +1,7 @@
+# ============================================================
+# ResoMap – MLflow Tracking Configuration
+# ============================================================
+# Experiment tracking and logging settings
+
+tracking_uri: "https://dagshub.com/Y-R-A-V-R-5/ResoMap.mlflow"
+experiment_name: "ResoMap"

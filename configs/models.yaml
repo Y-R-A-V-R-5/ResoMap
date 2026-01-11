@@ -1,0 +1,240 @@
+# ============================================================
+# ResoMap Model Architecture Registry
+# ============================================================
+# Comprehensive model definitions for resolution sensitivity experiments.
+# Supports multiple model families: VGG, ResNet, MobileNet, EfficientNet
+# 
+# Each model family has variants optimized for different scenarios:
+# - Light: Fewer layers, faster inference
+# - Standard: Balanced accuracy and speed
+# - Deep: More capacity for high-resolution inputs
+# ============================================================
+
+# ============================================================
+# VGG Family (Visual Geometry Group)
+# ============================================================
+# Classic architecture with stacked convolutions
+# Best for: Understanding resolution effects, explainability
+# Pros: Simple, interpretable, good for Grad-CAM
+# Cons: Large parameter count, slower than modern architectures
+
+vgg11:
+  type: "vgg"
+  num_classes: 10  # Override in code if needed
+  stages:
+    - stage: "stage1"
+      channels: [3, 64]
+      num_layers: 1
+      pool: true
+    - stage: "stage2"
+      channels: [64, 128]
+      num_layers: 1
+      pool: true
+    - stage: "stage3"
+      channels: [128, 256]
+      num_layers: 2
+      pool: true
+    - stage: "stage4"
+      channels: [256, 512]
+      num_layers: 2
+      pool: true
+    - stage: "stage5"
+      channels: [512, 512]
+      num_layers: 2
+      pool: true
+  classifier:
+    fc_layers: [4096, 4096]
+    dropout: 0.5
+
+vgg13:
+  type: "vgg"
+  num_classes: 10
+  stages:
+    - stage: "stage1"
+      channels: [3, 64]
+      num_layers: 2
+      pool: true
+    - stage: "stage2"
+      channels: [64, 128]
+      num_layers: 2
+      pool: true
+    - stage: "stage3"
+      channels: [128, 256]
+      num_layers: 2
+      pool: true
+    - stage: "stage4"
+      channels: [256, 512]
+      num_layers: 2
+      pool: true
+    - stage: "stage5"
+      channels: [512, 512]
+      num_layers: 2
+      pool: true
+  classifier:
+    fc_layers: [4096, 4096]
+    dropout: 0.5
+
+vgg16:
+  type: "vgg"
+  num_classes: 10
+  stages:
+    - stage: "stage1"
+      channels: [3, 64]
+      num_layers: 2
+      pool: true
+    - stage: "stage2"
+      channels: [64, 128]
+      num_layers: 2
+      pool: true
+    - stage: "stage3"
+      channels: [128, 256]
+      num_layers: 3
+      pool: true
+    - stage: "stage4"
+      channels: [256, 512]
+      num_layers: 3
+      pool: true
+    - stage: "stage5"
+      channels: [512, 512]
+      num_layers: 3
+      pool: true
+  classifier:
+    fc_layers: [4096, 4096]
+    dropout: 0.5
+
+# ============================================================
+# ResNet Family (Residual Networks)
+# ============================================================
+# Modern architecture with skip connections
+# Best for: High accuracy, deep networks, GPU efficiency
+# Pros: Better gradient flow, faster training, state-of-the-art accuracy
+# Cons: More complex to interpret
+
+resnet18:
+  type: "resnet"
+  num_classes: 10
+  block_type: "basic"  # BasicBlock (2 layers per block)
+  layers: [2, 2, 2, 2]  # Number of blocks in each stage
+  channels: [64, 128, 256, 512]
+  initial_channels: 64
+  use_se: false  # Squeeze-and-Excitation
+
+resnet34:
+  type: "resnet"
+  num_classes: 10
+  block_type: "basic"
+  layers: [3, 4, 6, 3]
+  channels: [64, 128, 256, 512]
+  initial_channels: 64
+  use_se: false
+
+resnet50:
+  type: "resnet"
+  num_classes: 10
+  block_type: "bottleneck"  # Bottleneck (3 layers per block)
+  layers: [3, 4, 6, 3]
+  channels: [64, 128, 256, 512]
+  initial_channels: 64
+  use_se: false
+
+resnet101:
+  type: "resnet"
+  num_classes: 10
+  block_type: "bottleneck"
+  layers: [3, 4, 23, 3]
+  channels: [64, 128, 256, 512]
+  initial_channels: 64
+  use_se: false
+
+# ============================================================
+# MobileNet Family
+# ============================================================
+# Lightweight architecture for mobile/embedded devices
+# Best for: Edge deployment, speed, low memory
+# Pros: Very fast, small model size, good accuracy
+# Cons: Slightly lower accuracy than ResNet
+
+mobilenet_v2:
+  type: "mobilenet"
+  num_classes: 10
+  width_mult: 1.0  # Width multiplier (0.5, 0.75, 1.0)
+  inverted_residual_setting:
+    # [expand_ratio, channels, num_blocks, stride]
+    - [1, 16, 1, 1]
+    - [6, 24, 2, 2]
+    - [6, 32, 3, 2]
+    - [6, 64, 4, 2]
+    - [6, 96, 3, 1]
+    - [6, 160, 3, 2]
+    - [6, 320, 1, 1]
+  dropout: 0.2
+
+mobilenet_v2_small:
+  type: "mobilenet"
+  num_classes: 10
+  width_mult: 0.5  # Smaller model
+  inverted_residual_setting:
+    - [1, 16, 1, 1]
+    - [6, 24, 2, 2]
+    - [6, 32, 3, 2]
+    - [6, 64, 4, 2]
+    - [6, 96, 3, 1]
+    - [6, 160, 3, 2]
+    - [6, 320, 1, 1]
+  dropout: 0.2
+
+mobilenet_v3_small:
+  type: "mobilenet_v3"
+  num_classes: 10
+  mode: "small"  # small or large
+  width_mult: 1.0
+  dropout: 0.2
+
+mobilenet_v3_large:
+  type: "mobilenet_v3"
+  num_classes: 10
+  mode: "large"
+  width_mult: 1.0
+  dropout: 0.2
+
+# ============================================================
+# Lightweight Custom Models
+# ============================================================
+# Simple models for quick experiments
+
+simple_cnn:
+  type: "simple"
+  num_classes: 10
+  channels: [32, 64, 128, 256]
+  fc_layers: [512, 256]
+  dropout: 0.3
+
+tiny_cnn:
+  type: "simple"
+  num_classes: 10
+  channels: [16, 32, 64]
+  fc_layers: [128]
+  dropout: 0.3
+
+# ============================================================
+# Model Selection Guide
+# ============================================================
+# 
+# For Resolution Experiments:
+# - Start with: VGG11 or ResNet18 (good balance)
+# - High accuracy: ResNet50, EfficientNet-B0
+# - Speed/efficiency: MobileNet-V2, Simple-CNN
+# - Explainability: VGG16 (best for Grad-CAM)
+# 
+# For Different Resolutions:
+# - 64-128: Tiny-CNN, MobileNet-Small
+# - 224: ResNet18, VGG11, MobileNet-V2
+# - 384+: ResNet50, EfficientNet, VGG16
+# 
+# GPU Memory Requirements (approx, batch=64, res=224):
+# - Tiny-CNN: <1 GB
+# - MobileNet-V2: 1-2 GB
+# - ResNet18: 2-3 GB
+# - VGG11: 3-4 GB
+# - ResNet50: 4-6 GB
+# ============================================================

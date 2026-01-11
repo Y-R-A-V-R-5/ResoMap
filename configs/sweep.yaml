@@ -1,0 +1,31 @@
+# ============================================================
+# ResoMap – Experiment Sweep Configuration
+# ============================================================
+# Defines the experiment grid: models and resolutions to test
+
+# Model architectures to analyze (all models from models.yaml)
+models:
+  # VGG Family
+  - "vgg11"
+  - "vgg13"
+  - "vgg16"
+  # ResNet Family
+  - "resnet18"
+  - "resnet34"
+  - "resnet50"
+  - "resnet101"
+  # MobileNet Family
+  - "mobilenet_v2"
+  - "mobilenet_v2_small"
+  - "mobilenet_v3_small"
+  - "mobilenet_v3_large"
+  # EfficientNet Family (Not yet implemented)
+  # - "efficientnet_b0"
+  # - "efficientnet_b1"
+  # - "efficientnet_b2"
+  # Simple CNNs
+  - "simple_cnn"
+  - "tiny_cnn"
+
+# Spatial input resolutions to evaluate
+resolutions: [224, 256, 320, 384, 512]

@@ -1,0 +1,20 @@
+# Python cache
+__pycache__/
+
+# Environment
+.ml-env/
+
+# Data
+data/
+
+# File types (ignored everywhere)
+*.png
+*.txt
+*.json
+*.csv
+*.pt
+
+# Project-generated folders
+checkpoints/
+analysis/
+explain/

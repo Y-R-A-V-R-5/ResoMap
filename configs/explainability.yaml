@@ -1,0 +1,30 @@
+# ============================================================
+# ResoMap – Explainability Configuration
+# ============================================================
+# Settings for model interpretation and visualization
+
+enabled: true
+
+# Methods to use
+methods:
+  - "gradcam"              # Gradient-weighted Class Activation Mapping
+  - "integrated_gradients" # Integrated Gradients
+  - "saliency"            # Saliency Maps
+
+# Grad-CAM settings
+gradcam:
+  target_layers: ["stages.stage5"]  # Layers to visualize
+  use_cuda: true
+
+# Number of samples to generate explanations for
+num_samples: 20
+
+# Save visualizations
+save_visualizations: true
+output_dir: "explain/"
+
+# Compare explanations across resolutions
+compare_resolutions: true
+
+# Class-specific analysis
+per_class_analysis: true

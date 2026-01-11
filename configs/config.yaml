@@ -1,0 +1,27 @@
+# ============================================================
+# ResoMap – Main Configuration File
+# ============================================================
+# This is the main configuration file that references modular configs.
+# Individual configuration files are organized by domain:
+#   - sweep.yaml: Experiment grid (models, resolutions)
+#   - training.yaml: Training hyperparameters
+#   - system.yaml: GPU/system settings
+#   - data.yaml: Dataset and augmentation
+#   - explainability.yaml: Interpretation methods
+#   - mlflow.yaml: Experiment tracking
+#   - models.yaml: Model architectures
+# ============================================================
+
+project_name: "ResoMap"
+
+description: >
+  Resolution Sensitivity Analysis with GPU Acceleration.
+  Measures accuracy, latency, GPU memory, and model explanations
+  as a function of input resolution. Includes explainability
+  analysis (Grad-CAM, Integrated Gradients) to understand
+  how different resolutions affect model decision-making.
+
+# Configuration files are loaded automatically by utils.load_config()
+# Individual configs available at:
+#   config['sweep'], config['training'], config['system'], 
+#   config['data'], config['explainability'], config['mlflow']

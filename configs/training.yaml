@@ -1,0 +1,47 @@
+# ============================================================
+# ResoMap – Training Configuration
+# ============================================================
+# Training hyperparameters and optimization settings
+
+# Batch size (increase for GPU)
+batch_size: 64
+
+# Training epochs
+epochs: 50
+
+# Initial epochs ignored for early stopping decisions
+warmup_epochs: 5
+
+# Optimizer settings
+optimizer: "adam"
+learning_rate: 0.001
+weight_decay: 1.0e-4
+
+# Loss function
+criterion: "cross_entropy"
+
+# Learning rate scheduler
+scheduler:
+  enabled: true
+  type: "cosine"  # Options: cosine, step, plateau, exponential
+  patience: 5     # For ReduceLROnPlateau
+  factor: 0.5     # LR reduction factor
+  min_lr: 1.0e-6
+
+# Gradient clipping to prevent exploding gradients
+gradient_clip_norm: 1.0
+
+# Early stopping prevents overtraining and wasted compute
+early_stopping:
+  enabled: true
+  patience: 10
+  monitor: "val_loss"
+  min_delta: 0.001
+
+# Model checkpointing
+checkpointing:
+  enabled: true
+  save_top_k: 3           # Save top 3 models
+  monitor: "val_accuracy"  # Metric to monitor
+  mode: "max"             # max for accuracy, min for loss
+  save_dir: "checkpoints/"
