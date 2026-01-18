@@ -74,6 +74,10 @@ class Trainer:
         self.epoch_times = []
         self.gpu_memory_usage = []
 
+        # Validation tracking (ADD THIS)
+        self.last_val_metrics = None
+
+
     def train_epoch(self):
         """Perform one training epoch with GPU optimizations."""
         self.model.train()  # Set model to training mode
@@ -185,6 +189,8 @@ class Trainer:
 
         metrics = {"loss": avg_loss}
         metrics.update(self._compute_metrics(all_labels, all_preds))
+
+        self.last_val_metrics = metrics
 
         return metrics
     

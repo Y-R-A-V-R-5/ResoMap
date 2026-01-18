@@ -8,17 +8,12 @@ models:
   # VGG Family
   - "vgg11"
   - "vgg13"
-  - "vgg16"
   # ResNet Family
   - "resnet18"
   - "resnet34"
-  - "resnet50"
-  - "resnet101"
   # MobileNet Family
-  - "mobilenet_v2"
   - "mobilenet_v2_small"
   - "mobilenet_v3_small"
-  - "mobilenet_v3_large"
   # EfficientNet Family (Not yet implemented)
   # - "efficientnet_b0"
   # - "efficientnet_b1"

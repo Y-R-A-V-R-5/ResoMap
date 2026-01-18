@@ -38,27 +38,131 @@ from src.analysis import DatasetAnalyzer, ModelSummaryAnalyzer
 
 def main():
     """Main execution function for dataset and model analysis."""
-    parser = argparse.ArgumentParser(description="ResoMap Dataset & Model Analysis")
-    parser.add_argument('--config', type=str, default='configs/config.yaml',
-                       help='Path to configuration file')
-    parser.add_argument('--models', type=str, nargs='+', default=None,
-                       help='Models to analyze (default: from config)')
-    parser.add_argument('--resolutions', type=int, nargs='+', default=None,
-                       help='Resolutions to analyze (default: from config)')
-    parser.add_argument('--data-analysis-only', action='store_true',
-                       help='Only perform dataset analysis (skip model summaries)')
-    parser.add_argument('--model-summary-only', action='store_true',
-                       help='Only perform model architecture analysis (skip dataset analysis)')
-    parser.add_argument('--data-output-dir', type=str, default='analysis',
-                       help='Directory to save data analysis results')
-    parser.add_argument('--model-summary-dir', type=str, default='summary',
-                       help='Directory to save model summary results')
+    parser = argparse.ArgumentParser(
+        description="ResoMap Dataset & Model Analysis"
+    )
+
+    # ------------------------------------------------------------
+    # Configuration files
+    # ------------------------------------------------------------
+    parser.add_argument(
+        '--data-config',
+        type=str,
+        default='configs/data.yaml',
+        help='Path to data configuration file (defines raw_path)'
+    )
+
+    parser.add_argument(
+        '--sweep-config',
+        type=str,
+        default='configs/sweep.yaml',
+        help='Path to sweep configuration file (models, resolutions)'
+    )
+
+    parser.add_argument(
+        '--system-config',
+        type=str,
+        default='configs/system.yaml',
+        help='Path to system configuration file'
+    )
+
+    # ------------------------------------------------------------
+    # Optional CLI overrides
+    # ------------------------------------------------------------
+    parser.add_argument(
+        '--models',
+        type=str,
+        nargs='+',
+        default=None,
+        help='Override models to analyze (default: from sweep config)'
+    )
+
+    parser.add_argument(
+        '--resolutions',
+        type=int,
+        nargs='+',
+        default=None,
+        help='Override resolutions to analyze (default: from sweep config)'
+    )
+
+    # ------------------------------------------------------------
+    # Execution modes
+    # ------------------------------------------------------------
+    parser.add_argument(
+        '--data-analysis-only',
+        action='store_true',
+        help='Only perform dataset analysis'
+    )
+
+    parser.add_argument(
+        '--model-summary-only',
+        action='store_true',
+        help='Only perform model architecture analysis'
+    )
+
+    # ------------------------------------------------------------
+    # Output directories
+    # ------------------------------------------------------------
+    parser.add_argument(
+        '--data-output-dir',
+        type=str,
+        default='analysis',
+        help='Directory to save dataset analysis results'
+    )
+
+    parser.add_argument(
+        '--model-summary-dir',
+        type=str,
+        default='summary',
+        help='Directory to save model summary results'
+    )
     
     args = parser.parse_args()
     
-    # Load config
-    with open(args.config) as f:
-        config = yaml.safe_load(f)
+    # ------------------------------------------------------------
+    # Load Data Configuration
+    # ------------------------------------------------------------
+    with open(args.data_config) as f:
+        data_config = yaml.safe_load(f)
+
+    if 'raw_path' not in data_config:
+        raise KeyError(
+            "Missing 'raw_path' in Data Configuration.\n"
+            f"Loaded file: {args.config}\n"
+            f"Available keys: {list(data_config.keys())}"
+        )
+
+    data_dir = data_config['raw_path']
+
+    # ------------------------------------------------------------
+    # Load Sweep Configuration
+    # ------------------------------------------------------------
+    with open(args.sweep_config) as f:
+        sweep_config = yaml.safe_load(f)
+
+    required_sweep_keys = ['models', 'resolutions']
+    missing = [k for k in required_sweep_keys if k not in sweep_config]
+
+    if missing:
+        raise KeyError(
+            "Invalid Sweep Configuration.\n"
+            f"Missing keys: {missing}\n"
+            f"Loaded file: {args.sweep_config}\n"
+            f"Available keys: {list(sweep_config.keys())}"
+        )
+    
+    # ------------------------------------------------------------
+    # Load System Configuration
+    # ------------------------------------------------------------
+    with open(args.system_config) as f:
+        system_raw = yaml.safe_load(f)
+
+    # Wrap into the structure expected by ModelSummaryAnalyzer
+    system_config = {'system': system_raw}
+
+    if 'device' not in system_config['system']:
+        system_config['system']['device'] = 'cpu'
+        print("Warning: 'device' not found in system.yaml. Falling back to CPU.")
     
     # Perform dataset analysis if requested
     if args.data_analysis_only:
@@ -66,7 +170,6 @@ def main():
         print("Running Dataset Analysis Only")
         print("="*60)
         
-        data_dir = config['data']['raw_path']
         dataset_analyzer = DatasetAnalyzer(data_dir, args.data_output_dir)
         dataset_analyzer.analyze_dataset()
         
@@ -82,10 +185,13 @@ def main():
         print("Running Model Architecture Summary")
         print("="*60)
         
-        models = args.models or config['sweep']['models']
-        resolutions = args.resolutions or config['sweep']['resolutions']
-        
-        model_analyzer = ModelSummaryAnalyzer(config, args.model_summary_dir)
+        models = args.models or sweep_config['models']
+        resolutions = args.resolutions or sweep_config['resolutions']
+
+        model_analyzer = ModelSummaryAnalyzer(
+            models_config=models_config,
+            output_dir=args.model_summary_dir
+        )
         model_analyzer.analyze_models(models, resolutions)
         
         print("\n" + "="*60)
@@ -98,22 +204,24 @@ def main():
     print("\n" + "="*60)
     print("Step 1: Dataset Analysis")
     print("="*60)
-    data_dir = config['data']['raw_path']
     dataset_analyzer = DatasetAnalyzer(data_dir, args.data_output_dir)
     dataset_analyzer.analyze_dataset()
     
     print("\n" + "="*60)
     print("Step 2: Model Architecture Summary")
     print("="*60)
-    
-    models = args.models or config['sweep']['models']
-    resolutions = args.resolutions or config['sweep']['resolutions']
-    
+
+    models = args.models or sweep_config['models']
+    resolutions = args.resolutions or sweep_config['resolutions']
+        
     print(f"ResoMap Analysis")
     print(f"Models: {models}")
     print(f"Resolutions: {resolutions}")
     
-    model_analyzer = ModelSummaryAnalyzer(config, args.model_summary_dir)
+    model_analyzer = ModelSummaryAnalyzer(
+        system_config,
+        args.model_summary_dir
+    )
     model_analyzer.analyze_models(models, resolutions)
     
     print("\n" + "="*60)

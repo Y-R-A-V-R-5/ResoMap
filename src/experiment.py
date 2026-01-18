@@ -17,10 +17,12 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import mlflow
+import json
 from pathlib import Path
 from tqdm import tqdm
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support, confusion_matrix
 from typing import Dict, Any
+from datetime import datetime
 
 from .data import get_data_loaders
 from .models import build_model
@@ -152,6 +154,96 @@ class ExperimentRunner:
         models_config_path = self.project_root / "configs" / "models.yaml"
         self.models_config = load_config(models_config_path)
     
+    def _check_checkpoint_exists(self, model_name: str, resolution: int) -> tuple:
+        """
+        Check if checkpoint exists for model and resolution.
+        
+        Returns
+        -------
+        tuple
+            (has_checkpoint: bool, checkpoint_path: Path or None)
+        """
+        model_family = get_model_family(model_name)
+        checkpoint_dir = (
+            self.project_root / "checkpoints" / 
+            model_family / model_name / str(resolution)
+        )
+        
+        best_model_path = checkpoint_dir / "best_model.pt"
+        if best_model_path.exists():
+            return True, best_model_path
+        
+        return False, None
+    
+    def _load_checkpoint(self, model: torch.nn.Module, checkpoint_path: Path):
+        """
+        Load model weights from checkpoint.
+        
+        Parameters
+        ----------
+        model : nn.Module
+            Model to load weights into
+        checkpoint_path : Path
+            Path to checkpoint file
+        """
+        try:
+            checkpoint = torch.load(checkpoint_path, weights_only=False)
+            model.load_state_dict(checkpoint["model_state_dict"])
+            print(f"[ResoMap] ✓ Loaded checkpoint from {checkpoint_path}")
+            return True
+        except Exception as e:
+            print(f"[ResoMap] ⚠ Could not load checkpoint: {e}")
+            return False
+    
+    def _save_results_to_json(
+        self, 
+        model_name: str, 
+        resolution: int,
+        test_metrics: Dict[str, Any],
+        prof_results: Dict[str, Any],
+        best_val_loss: float
+    ):
+        """
+        Save experiment results to JSON file.
+        
+        Parameters
+        ----------
+        model_name : str
+            Name of the model
+        resolution : int
+            Input resolution
+        test_metrics : dict
+            Test set metrics
+        prof_results : dict
+            Profiling results
+        best_val_loss : float
+            Best validation loss during training
+        """
+        # Create results directory if it doesn't exist
+        results_dir = self.project_root / "results" / "test_results"
+        results_dir.mkdir(parents=True, exist_ok=True)
+        
+        # Prepare results dictionary
+        results_data = {
+            "model": model_name,
+            "resolution": resolution,
+            "timestamp": datetime.now().isoformat(),
+            "best_val_loss": float(best_val_loss),
+            "test_metrics": {k: float(v) if isinstance(v, (int, float)) else v 
+                           for k, v in test_metrics.items()},
+            "profiling": {k: float(v) if isinstance(v, (int, float)) else v 
+                         for k, v in prof_results.items()}
+        }
+        
+        # Save to JSON file
+        json_path = results_dir / f"{model_name}_{resolution}.json"
+        try:
+            with open(json_path, 'w') as f:
+                json.dump(results_data, f, indent=2)
+            print(f"[ResoMap] ✓ Saved results to {json_path}")
+        except Exception as e:
+            print(f"[ResoMap] ⚠ Failed to save results to JSON: {e}")
+    
     def run_experiment(
         self,
         model_name: str,
@@ -160,6 +252,9 @@ class ExperimentRunner:
     ) -> Dict[str, Any]:
         """
         Run a full training experiment for a single model and resolution.
+        
+        Supports resume capability - if a checkpoint exists, it will be loaded
+        and training can continue.
         
         Parameters
         ----------
@@ -177,6 +272,12 @@ class ExperimentRunner:
         """
         print(f"\n[ResoMap] Starting experiment → model={model_name}, resolution={resolution}")
         print(f"Dataset path: {dataset_path}")
+        
+        # Check for existing checkpoint (resume capability)
+        has_checkpoint, checkpoint_path = self._check_checkpoint_exists(model_name, resolution)
+        if has_checkpoint:
+            print(f"[ResoMap] Found existing checkpoint: {checkpoint_path}")
+            print(f"[ResoMap] Will attempt to resume training from this checkpoint")
         
         # Validate model exists
         if model_name not in self.models_config:
@@ -200,6 +301,14 @@ class ExperimentRunner:
         model = build_model(model_cfg, resolution)
         device = torch.device(self.system_cfg.get("device", "cpu"))
         model.to(device)
+        
+        # Load checkpoint if available (resume capability)
+        if has_checkpoint and checkpoint_path:
+            checkpoint_loaded = self._load_checkpoint(model, checkpoint_path)
+            if checkpoint_loaded:
+                print(f"[ResoMap] Model restored from checkpoint, will continue training")
+            else:
+                print(f"[ResoMap] Could not load checkpoint, starting fresh")
         
         criterion = nn.CrossEntropyLoss()
         optimizer = optim.Adam(
@@ -282,6 +391,13 @@ class ExperimentRunner:
             self._print_summary(
                 model_name, resolution, best_val_loss,
                 test_metrics, prof_results
+            )
+            
+            # Save results to JSON
+            self._save_results_to_json(
+                model_name, resolution,
+                test_metrics, prof_results,
+                best_val_loss
             )
             
             results = {

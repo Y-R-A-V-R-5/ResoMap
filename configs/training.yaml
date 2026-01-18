@@ -4,10 +4,10 @@
 # Training hyperparameters and optimization settings
 
 # Batch size (increase for GPU)
-batch_size: 64
+batch_size: 32
 
 # Training epochs
-epochs: 50
+epochs: 25
 
 # Initial epochs ignored for early stopping decisions
 warmup_epochs: 5

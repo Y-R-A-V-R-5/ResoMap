@@ -74,34 +74,6 @@ vgg13:
     fc_layers: [4096, 4096]
     dropout: 0.5
 
-vgg16:
-  type: "vgg"
-  num_classes: 10
-  stages:
-    - stage: "stage1"
-      channels: [3, 64]
-      num_layers: 2
-      pool: true
-    - stage: "stage2"
-      channels: [64, 128]
-      num_layers: 2
-      pool: true
-    - stage: "stage3"
-      channels: [128, 256]
-      num_layers: 3
-      pool: true
-    - stage: "stage4"
-      channels: [256, 512]
-      num_layers: 3
-      pool: true
-    - stage: "stage5"
-      channels: [512, 512]
-      num_layers: 3
-      pool: true
-  classifier:
-    fc_layers: [4096, 4096]
-    dropout: 0.5
-
 # ============================================================
 # ResNet Family (Residual Networks)
 # ============================================================
@@ -128,24 +100,6 @@ resnet34:
   initial_channels: 64
   use_se: false
 
-resnet50:
-  type: "resnet"
-  num_classes: 10
-  block_type: "bottleneck"  # Bottleneck (3 layers per block)
-  layers: [3, 4, 6, 3]
-  channels: [64, 128, 256, 512]
-  initial_channels: 64
-  use_se: false
-
-resnet101:
-  type: "resnet"
-  num_classes: 10
-  block_type: "bottleneck"
-  layers: [3, 4, 23, 3]
-  channels: [64, 128, 256, 512]
-  initial_channels: 64
-  use_se: false
-
 # ============================================================
 # MobileNet Family
 # ============================================================
@@ -153,21 +107,6 @@ resnet101:
 # Best for: Edge deployment, speed, low memory
 # Pros: Very fast, small model size, good accuracy
 # Cons: Slightly lower accuracy than ResNet
-
-mobilenet_v2:
-  type: "mobilenet"
-  num_classes: 10
-  width_mult: 1.0  # Width multiplier (0.5, 0.75, 1.0)
-  inverted_residual_setting:
-    # [expand_ratio, channels, num_blocks, stride]
-    - [1, 16, 1, 1]
-    - [6, 24, 2, 2]
-    - [6, 32, 3, 2]
-    - [6, 64, 4, 2]
-    - [6, 96, 3, 1]
-    - [6, 160, 3, 2]
-    - [6, 320, 1, 1]
-  dropout: 0.2
 
 mobilenet_v2_small:
   type: "mobilenet"
@@ -187,13 +126,6 @@ mobilenet_v3_small:
   type: "mobilenet_v3"
   num_classes: 10
   mode: "small"  # small or large
-  width_mult: 1.0
-  dropout: 0.2
-
-mobilenet_v3_large:
-  type: "mobilenet_v3"
-  num_classes: 10
-  mode: "large"
   width_mult: 1.0
   dropout: 0.2
 
@@ -235,6 +167,4 @@ tiny_cnn:
 # - Tiny-CNN: <1 GB
 # - MobileNet-V2: 1-2 GB
 # - ResNet18: 2-3 GB
-# - VGG11: 3-4 GB
-# - ResNet50: 4-6 GB
 # ============================================================
