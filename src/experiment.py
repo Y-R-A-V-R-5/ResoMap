@@ -326,7 +326,7 @@ class ExperimentRunner:
         early_stopping = EarlyStopping(
             patience=es_cfg.get("patience", 5),
             warmup_epochs=self.training_cfg.get("warmup_epochs", 3),
-            mode="min",
+            mode="max",
             min_delta=es_cfg.get("min_delta", 0.0),
         )
         early_stopping_enabled = es_cfg.get("enabled", False)
@@ -466,26 +466,27 @@ class ExperimentRunner:
                 {f"val_{k}": v for k, v in val_metrics.items()},
                 step=epoch
             )
-            
+            best_val_acc = 0.0
+
             # Save best model
-            if val_metrics["loss"] < best_val_loss:
-                best_val_loss = val_metrics["loss"]
+            if early_stopping.is_best:
+                best_val_acc = val_metrics["accuracy"]
                 torch.save(
                     {
                         "model_state_dict": model.state_dict(),
                         "model": model_name,
                         "resolution": resolution,
                         "epoch": epoch,
+                        "val_accuracy": val_metrics["accuracy"],
                         "val_loss": val_metrics["loss"],
-                        "val_accuracy": val_metrics.get("accuracy", 0.0),
                     },
                     best_model_path,
                 )
-                print(f"[ResoMap] ✔ Saved best model → {best_model_path}")
+                print(f"[ResoMap] ✔ Saved best model (by accuracy) → {best_model_path}")
             
             # Early stopping check
             if early_stopping_enabled:
-                early_stopping.step(epoch, val_metrics["loss"])
+                early_stopping.step(epoch, val_metrics["accuracy"])
                 if early_stopping.stop:
                     print(f"[ResoMap] Early stopping at epoch {epoch + 1}")
                     break

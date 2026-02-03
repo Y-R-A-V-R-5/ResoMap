@@ -16,5 +16,4 @@ data/
 
 # Project-generated folders
 checkpoints/
-analysis/
 explain/

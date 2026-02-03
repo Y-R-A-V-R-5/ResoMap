@@ -2,9 +2,23 @@
 # ResoMap – Experiment Sweep Configuration
 # ============================================================
 # Defines the experiment grid: models and resolutions to test
+# 
+# COMPLETED TRAINING (2 days, Feb 1-3, 2026):
+#   - simple_cnn × 5 resolutions = 5 experiments ✓
+#   - tiny_cnn × 5 resolutions = 5 experiments ✓
+#   Total: 10 experiments completed
+#
+# View results: https://dagshub.com/Y-R-A-V-R-5/ResoMap/experiments
+#
+# Other models below are available for future research
 
 # Model architectures to analyze (all models from models.yaml)
 models:
+  # === TRAINED MODELS (COMPLETED) ===
+  - "simple_cnn"      # ✓ Completed (best: 81.69% @ 320px)
+  - "tiny_cnn"        # ✓ Completed (best: 67.81% @ 256px)
+  
+  # === AVAILABLE FOR FUTURE RESEARCH ===
   # VGG Family
   - "vgg11"
   - "vgg13"
@@ -14,13 +28,6 @@ models:
   # MobileNet Family
   - "mobilenet_v2_small"
   - "mobilenet_v3_small"
-  # EfficientNet Family (Not yet implemented)
-  # - "efficientnet_b0"
-  # - "efficientnet_b1"
-  # - "efficientnet_b2"
-  # Simple CNNs
-  - "simple_cnn"
-  - "tiny_cnn"
 
-# Spatial input resolutions to evaluate
+# Spatial input resolutions to evaluate (all 5 tested)
 resolutions: [224, 256, 320, 384, 512]
