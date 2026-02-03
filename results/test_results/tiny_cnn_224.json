@@ -1,0 +1,24 @@
+{
+  "model": "tiny_cnn",
+  "resolution": 224,
+  "timestamp": "2026-02-03T05:36:05.560777",
+  "best_val_loss": Infinity,
+  "test_metrics": {
+    "loss": 0.9043970603333867,
+    "accuracy": 0.6717766219545579,
+    "precision": 0.6571079709810069,
+    "recall": 0.45574066819491993,
+    "f1_score": 0.4987962902633386
+  },
+  "profiling": {
+    "avg_time_sec": 0.023594466857910158,
+    "std_time_sec": 0.05597783107052427,
+    "min_time_sec": 0.011974592208862305,
+    "max_time_sec": 0.2978272705078125,
+    "throughput_samples_sec": 1356.250183261583,
+    "peak_cpu_memory_mb": 527.388672,
+    "gpu_memory_allocated_mb": 18.36962890625,
+    "gpu_memory_reserved_mb": 240.0,
+    "gpu_memory_peak_mb": 232.74462890625
+  }
+}

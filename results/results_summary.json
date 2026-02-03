@@ -1,0 +1,116 @@
+{
+  "generated_at": "2026-02-03T15:08:53.661902",
+  "total_experiments": 10,
+  "models": [
+    "simple_cnn",
+    "tiny_cnn"
+  ],
+  "resolutions": [
+    224,
+    256,
+    320,
+    384,
+    512
+  ],
+  "statistics": {
+    "by_model": {
+      "simple_cnn": {
+        "num_experiments": 5,
+        "avg_test_accuracy": 0.765015056118259,
+        "best_test_accuracy": 0.8168628524500411,
+        "worst_test_accuracy": 0.6972351491924446,
+        "avg_test_f1": 0.6556554988547466,
+        "avg_inference_time_sec": 0.07949036486816402,
+        "avg_throughput_samples_sec": 499.8150396533164
+      },
+      "tiny_cnn": {
+        "num_experiments": 5,
+        "avg_test_accuracy": 0.662523952915412,
+        "best_test_accuracy": 0.6780728168628525,
+        "worst_test_accuracy": 0.647960580344922,
+        "avg_test_f1": 0.47819273270298207,
+        "avg_inference_time_sec": 0.03933160201263422,
+        "avg_throughput_samples_sec": 941.9792068864866
+      }
+    },
+    "by_resolution": {
+      "224": {
+        "num_experiments": 2,
+        "avg_test_accuracy": 0.7221461812209143,
+        "best_test_accuracy": 0.7725157404872708,
+        "worst_test_accuracy": 0.6717766219545579,
+        "avg_test_f1": 0.5938404518905351,
+        "avg_inference_time_sec": 0.03182698242187495,
+        "avg_throughput_samples_sec": 1077.5309954605314
+      },
+      "256": {
+        "num_experiments": 2,
+        "avg_test_accuracy": 0.7450041062140706,
+        "best_test_accuracy": 0.8119353955652888,
+        "worst_test_accuracy": 0.6780728168628525,
+        "avg_test_f1": 0.61287081474545,
+        "avg_inference_time_sec": 0.0365773483085632,
+        "avg_throughput_samples_sec": 965.1014408778733
+      },
+      "320": {
+        "num_experiments": 2,
+        "avg_test_accuracy": 0.7391185327128388,
+        "best_test_accuracy": 0.8168628524500411,
+        "worst_test_accuracy": 0.6613742129756365,
+        "avg_test_f1": 0.5956273989759289,
+        "avg_inference_time_sec": 0.05152745658874505,
+        "avg_throughput_samples_sec": 685.862910237934
+      },
+      "384": {
+        "num_experiments": 2,
+        "avg_test_accuracy": 0.6753353408157678,
+        "best_test_accuracy": 0.6972351491924446,
+        "worst_test_accuracy": 0.6534355324390911,
+        "avg_test_f1": 0.5148132746802668,
+        "avg_inference_time_sec": 0.0692932683563232,
+        "avg_throughput_samples_sec": 531.9384342359863
+      },
+      "512": {
+        "num_experiments": 2,
+        "avg_test_accuracy": 0.6872433616205857,
+        "best_test_accuracy": 0.7265261428962496,
+        "worst_test_accuracy": 0.647960580344922,
+        "avg_test_f1": 0.5174686386021407,
+        "avg_inference_time_sec": 0.1078298615264892,
+        "avg_throughput_samples_sec": 344.05183553718257
+      }
+    }
+  },
+  "top_5_results": [
+    {
+      "model": "simple_cnn",
+      "resolution": 320,
+      "test_accuracy": 0.8168628524500411,
+      "test_f1_score": 0.7341981841139992
+    },
+    {
+      "model": "simple_cnn",
+      "resolution": 256,
+      "test_accuracy": 0.8119353955652888,
+      "test_f1_score": 0.7276168747520682
+    },
+    {
+      "model": "simple_cnn",
+      "resolution": 224,
+      "test_accuracy": 0.7725157404872708,
+      "test_f1_score": 0.6888846135177318
+    },
+    {
+      "model": "simple_cnn",
+      "resolution": 512,
+      "test_accuracy": 0.7265261428962496,
+      "test_f1_score": 0.5767176974448157
+    },
+    {
+      "model": "simple_cnn",
+      "resolution": 384,
+      "test_accuracy": 0.6972351491924446,
+      "test_f1_score": 0.5508601244451182
+    }
+  ]
+}

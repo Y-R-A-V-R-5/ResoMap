@@ -1,0 +1,100 @@
+======================================================================
+ResoMap Experiment Results Report
+======================================================================
+
+Generated: 2026-02-03 15:08:53
+Total Experiments: 10
+Models: simple_cnn, tiny_cnn
+Resolutions: 224, 256, 320, 384, 512
+
+----------------------------------------------------------------------
+TOP 10 BEST RESULTS
+----------------------------------------------------------------------
+
+  simple_cnn           @ 320px | Accuracy: 0.8169 | F1: 0.7342 | Val Loss: inf
+  simple_cnn           @ 256px | Accuracy: 0.8119 | F1: 0.7276 | Val Loss: inf
+  simple_cnn           @ 224px | Accuracy: 0.7725 | F1: 0.6889 | Val Loss: inf
+  simple_cnn           @ 512px | Accuracy: 0.7265 | F1: 0.5767 | Val Loss: inf
+  simple_cnn           @ 384px | Accuracy: 0.6972 | F1: 0.5509 | Val Loss: inf
+  tiny_cnn             @ 256px | Accuracy: 0.6781 | F1: 0.4981 | Val Loss: inf
+  tiny_cnn             @ 224px | Accuracy: 0.6718 | F1: 0.4988 | Val Loss: inf
+  tiny_cnn             @ 320px | Accuracy: 0.6614 | F1: 0.4571 | Val Loss: inf
+  tiny_cnn             @ 384px | Accuracy: 0.6534 | F1: 0.4788 | Val Loss: inf
+  tiny_cnn             @ 512px | Accuracy: 0.6480 | F1: 0.4582 | Val Loss: inf
+
+----------------------------------------------------------------------
+RESULTS BY MODEL
+----------------------------------------------------------------------
+
+simple_cnn:
+  Experiments: 5
+  Avg Accuracy: 0.7650
+  Best Accuracy: 0.8169 @ 320px
+  Avg F1-Score: 0.6557
+  Avg Inference Time: 0.079490s
+
+tiny_cnn:
+  Experiments: 5
+  Avg Accuracy: 0.6625
+  Best Accuracy: 0.6781 @ 256px
+  Avg F1-Score: 0.4782
+  Avg Inference Time: 0.039332s
+
+----------------------------------------------------------------------
+RESULTS BY RESOLUTION
+----------------------------------------------------------------------
+
+224x224:
+  Experiments: 2
+  Avg Accuracy: 0.7221
+  Best Accuracy: 0.7725 (simple_cnn)
+  Avg F1-Score: 0.5938
+  Avg Inference Time: 0.031827s
+
+256x256:
+  Experiments: 2
+  Avg Accuracy: 0.7450
+  Best Accuracy: 0.8119 (simple_cnn)
+  Avg F1-Score: 0.6129
+  Avg Inference Time: 0.036577s
+
+320x320:
+  Experiments: 2
+  Avg Accuracy: 0.7391
+  Best Accuracy: 0.8169 (simple_cnn)
+  Avg F1-Score: 0.5956
+  Avg Inference Time: 0.051527s
+
+384x384:
+  Experiments: 2
+  Avg Accuracy: 0.6753
+  Best Accuracy: 0.6972 (simple_cnn)
+  Avg F1-Score: 0.5148
+  Avg Inference Time: 0.069293s
+
+512x512:
+  Experiments: 2
+  Avg Accuracy: 0.6872
+  Best Accuracy: 0.7265 (simple_cnn)
+  Avg F1-Score: 0.5175
+  Avg Inference Time: 0.107830s
+
+----------------------------------------------------------------------
+DETAILED RESULTS TABLE
+----------------------------------------------------------------------
+
+     model  resolution  test_accuracy  test_precision  test_recall  test_f1_score  profile_avg_time_sec  best_val_loss
+simple_cnn         224       0.772516        0.810157     0.639290       0.688885              0.040059            inf
+simple_cnn         256       0.811935        0.842319     0.689635       0.727617              0.047762            inf
+simple_cnn         320       0.816863        0.843342     0.691421       0.734198              0.067370            inf
+simple_cnn         384       0.697235        0.702916     0.515711       0.550860              0.094454            inf
+simple_cnn         512       0.726526        0.785349     0.538563       0.576718              0.147806            inf
+  tiny_cnn         224       0.671777        0.657108     0.455741       0.498796              0.023594            inf
+  tiny_cnn         256       0.678073        0.728468     0.473656       0.498125              0.025392            inf
+  tiny_cnn         320       0.661374        0.579731     0.441812       0.457057              0.035685            inf
+  tiny_cnn         384       0.653436        0.698383     0.440027       0.478766              0.044133            inf
+  tiny_cnn         512       0.647961        0.592871     0.439598       0.458220              0.067854            inf
+
+======================================================================
+End of Report
+======================================================================
