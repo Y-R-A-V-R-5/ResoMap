@@ -1,0 +1,45 @@
+ResoMap Dataset Analysis Summary
+============================================================
+
+Number of classes: 7
+Classes: akiec, bcc, bkl, df, mel, nv, vasc
+
+TRAIN Split
+------------------------------------------------------------
+Total images: 30,224
+
+Class  Count Percentage
+akiec   1374      4.55%
+  bcc   4182     13.84%
+  bkl   3023     10.00%
+   df    283      0.94%
+  mel   6574     21.75%
+   nv  14496     47.96%
+ vasc    292      0.97%
+
+VAL Split
+------------------------------------------------------------
+Total images: 8,283
+
+Class  Count Percentage
+akiec    538      6.50%
+  bcc   1676     20.23%
+  bkl    482      5.82%
+   df     71      0.86%
+  mel   2197     26.52%
+   nv   3232     39.02%
+ vasc     87      1.05%
+
+TEST Split
+------------------------------------------------------------
+Total images: 3,653
+
+Class  Count Percentage
+akiec    221      6.05%
+  bcc    615     16.84%
+  bkl    343      9.39%
+   df     52      1.42%
+  mel    850     23.27%
+   nv   1531     41.91%
+ vasc     41      1.12%
+

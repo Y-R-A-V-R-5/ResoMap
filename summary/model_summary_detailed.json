@@ -1,0 +1,317 @@
+[
+  {
+    "model": "vgg11",
+    "resolution": 224,
+    "total_params": 129684064,
+    "trainable_params": 129684064,
+    "gflops": 15.226692032,
+    "memory_mb": 552.0001907348633,
+    "mult_adds": 7613346016
+  },
+  {
+    "model": "vgg11",
+    "resolution": 256,
+    "total_params": 129815168,
+    "trainable_params": 129815168,
+    "gflops": 19.81443328,
+    "memory_mb": 570.0200881958008,
+    "mult_adds": 9907216640
+  },
+  {
+    "model": "vgg11",
+    "resolution": 320,
+    "total_params": 130077376,
+    "trainable_params": 130077376,
+    "gflops": 30.824907392,
+    "memory_mb": 613.0676956176758,
+    "mult_adds": 15412453696
+  },
+  {
+    "model": "vgg11",
+    "resolution": 384,
+    "total_params": 130339584,
+    "trainable_params": 130339584,
+    "gflops": 44.282036992,
+    "memory_mb": 665.4590530395508,
+    "mult_adds": 22141018496
+  },
+  {
+    "model": "vgg11",
+    "resolution": 512,
+    "total_params": 130864000,
+    "trainable_params": 130864000,
+    "gflops": 78.536262656,
+    "memory_mb": 798.2730178833008,
+    "mult_adds": 39268131328
+  },
+  {
+    "model": "vgg13",
+    "resolution": 224,
+    "total_params": 129868576,
+    "trainable_params": 129868576,
+    "gflops": 22.63507808,
+    "memory_mb": 589.4540481567383,
+    "mult_adds": 11317539040
+  },
+  {
+    "model": "vgg13",
+    "resolution": 256,
+    "total_params": 129999680,
+    "trainable_params": 129999680,
+    "gflops": 29.490692608,
+    "memory_mb": 618.7239456176758,
+    "mult_adds": 14745346304
+  },
+  {
+    "model": "vgg13",
+    "resolution": 320,
+    "total_params": 130261888,
+    "trainable_params": 130261888,
+    "gflops": 45.944062592,
+    "memory_mb": 688.7715530395508,
+    "mult_adds": 22972031296
+  },
+  {
+    "model": "vgg13",
+    "resolution": 384,
+    "total_params": 130524096,
+    "trainable_params": 130524096,
+    "gflops": 66.05362048,
+    "memory_mb": 774.1629104614258,
+    "mult_adds": 33026810240
+  },
+  {
+    "model": "vgg13",
+    "resolution": 512,
+    "total_params": 131048512,
+    "trainable_params": 131048512,
+    "gflops": 117.241299968,
+    "memory_mb": 990.9768753051758,
+    "mult_adds": 58620649984
+  },
+  {
+    "model": "resnet18",
+    "resolution": 224,
+    "total_params": 11291424,
+    "trainable_params": 11291424,
+    "gflops": 3.627371712,
+    "memory_mb": 81.54779815673828,
+    "mult_adds": 1813685856
+  },
+  {
+    "model": "resnet18",
+    "resolution": 256,
+    "total_params": 11307840,
+    "trainable_params": 11307840,
+    "gflops": 4.737748224,
+    "memory_mb": 93.38800811767578,
+    "mult_adds": 2368874112
+  },
+  {
+    "model": "resnet18",
+    "resolution": 320,
+    "total_params": 11340672,
+    "trainable_params": 11340672,
+    "gflops": 7.40263872,
+    "memory_mb": 121.77936553955078,
+    "mult_adds": 3701319360
+  },
+  {
+    "model": "resnet18",
+    "resolution": 384,
+    "total_params": 11373504,
+    "trainable_params": 11373504,
+    "gflops": 10.659712512,
+    "memory_mb": 156.45197296142578,
+    "mult_adds": 5329856256
+  },
+  {
+    "model": "resnet18",
+    "resolution": 512,
+    "total_params": 11439168,
+    "trainable_params": 11439168,
+    "gflops": 18.950409984,
+    "memory_mb": 244.64093780517578,
+    "mult_adds": 9475204992
+  },
+  {
+    "model": "resnet34",
+    "resolution": 224,
+    "total_params": 21399584,
+    "trainable_params": 21399584,
+    "gflops": 7.326762688,
+    "memory_mb": 139.24799346923828,
+    "mult_adds": 3663381344
+  },
+  {
+    "model": "resnet34",
+    "resolution": 256,
+    "total_params": 21416000,
+    "trainable_params": 21416000,
+    "gflops": 9.56960128,
+    "memory_mb": 156.94757843017578,
+    "mult_adds": 4784800640
+  },
+  {
+    "model": "resnet34",
+    "resolution": 320,
+    "total_params": 21448832,
+    "trainable_params": 21448832,
+    "gflops": 14.952400768,
+    "memory_mb": 199.40143585205078,
+    "mult_adds": 7476200384
+  },
+  {
+    "model": "resnet34",
+    "resolution": 384,
+    "total_params": 21481664,
+    "trainable_params": 21481664,
+    "gflops": 21.531363328,
+    "memory_mb": 251.26154327392578,
+    "mult_adds": 10765681664
+  },
+  {
+    "model": "resnet34",
+    "resolution": 512,
+    "total_params": 21547328,
+    "trainable_params": 21547328,
+    "gflops": 38.277777664,
+    "memory_mb": 383.2005081176758,
+    "mult_adds": 19138888832
+  },
+  {
+    "model": "mobilenet_v2_small",
+    "resolution": 224,
+    "total_params": 971392,
+    "trainable_params": 971392,
+    "gflops": 0.176170112,
+    "memory_mb": 55.71002960205078,
+    "mult_adds": 88085056
+  },
+  {
+    "model": "mobilenet_v2_small",
+    "resolution": 256,
+    "total_params": 1012384,
+    "trainable_params": 1012384,
+    "gflops": 0.229994816,
+    "memory_mb": 71.78583526611328,
+    "mult_adds": 114997408
+  },
+  {
+    "model": "mobilenet_v2_small",
+    "resolution": 320,
+    "total_params": 1094368,
+    "trainable_params": 1094368,
+    "gflops": 0.359141312,
+    "memory_mb": 110.30512237548828,
+    "mult_adds": 179570656
+  },
+  {
+    "model": "mobilenet_v2_small",
+    "resolution": 384,
+    "total_params": 1176352,
+    "trainable_params": 1176352,
+    "gflops": 0.516950592,
+    "memory_mb": 157.31464385986328,
+    "mult_adds": 258475296
+  },
+  {
+    "model": "mobilenet_v2_small",
+    "resolution": 512,
+    "total_params": 1340320,
+    "trainable_params": 1340320,
+    "gflops": 0.918557504,
+    "memory_mb": 276.8043899536133,
+    "mult_adds": 459278752
+  },
+  {
+    "model": "simple_cnn",
+    "resolution": 224,
+    "total_params": 2675936,
+    "trainable_params": 2675936,
+    "gflops": 1.484566336,
+    "memory_mb": 56.72724151611328,
+    "mult_adds": 742283168
+  },
+  {
+    "model": "simple_cnn",
+    "resolution": 256,
+    "total_params": 2684160,
+    "trainable_params": 2684160,
+    "gflops": 1.937641344,
+    "memory_mb": 70.99713897705078,
+    "mult_adds": 968820672
+  },
+  {
+    "model": "simple_cnn",
+    "resolution": 320,
+    "total_params": 2700608,
+    "trainable_params": 2700608,
+    "gflops": 3.025014784,
+    "memory_mb": 105.23224639892578,
+    "mult_adds": 1512507392
+  },
+  {
+    "model": "simple_cnn",
+    "resolution": 384,
+    "total_params": 2717056,
+    "trainable_params": 2717056,
+    "gflops": 4.354019456,
+    "memory_mb": 147.06110382080078,
+    "mult_adds": 2177009728
+  },
+  {
+    "model": "simple_cnn",
+    "resolution": 512,
+    "total_params": 2749952,
+    "trainable_params": 2749952,
+    "gflops": 7.736922496,
+    "memory_mb": 253.50006866455078,
+    "mult_adds": 3868461248
+  },
+  {
+    "model": "tiny_cnn",
+    "resolution": 224,
+    "total_params": 183904,
+    "trainable_params": 183904,
+    "gflops": 0.277693568,
+    "memory_mb": 22.71601104736328,
+    "mult_adds": 138846784
+  },
+  {
+    "model": "tiny_cnn",
+    "resolution": 256,
+    "total_params": 188032,
+    "trainable_params": 188032,
+    "gflops": 0.362611904,
+    "memory_mb": 29.47028350830078,
+    "mult_adds": 181305952
+  },
+  {
+    "model": "tiny_cnn",
+    "resolution": 320,
+    "total_params": 196288,
+    "trainable_params": 196288,
+    "gflops": 0.566412608,
+    "memory_mb": 45.67414093017578,
+    "mult_adds": 283206304
+  },
+  {
+    "model": "tiny_cnn",
+    "resolution": 384,
+    "total_params": 204544,
+    "trainable_params": 204544,
+    "gflops": 0.815498688,
+    "memory_mb": 65.47174835205078,
+    "mult_adds": 407749344
+  },
+  {
+    "model": "tiny_cnn",
+    "resolution": 512,
+    "total_params": 221056,
+    "trainable_params": 221056,
+    "gflops": 1.449526976,
+    "memory_mb": 115.84821319580078,
+    "mult_adds": 724763488
+  }
+]
